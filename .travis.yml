@@ -2,8 +2,6 @@ language: java
 jdk:
   - openjdk11
 
-if: tag is present
-
 sudo: required
 services:
   - docker
@@ -19,9 +17,6 @@ jobs:
       deploy:
         provider: script
         script: ./gradlew -Pversion=$TRAVIS_TAG release --scan --no-daemon -i
-        on:
-          tags: true
-          branch: master
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
