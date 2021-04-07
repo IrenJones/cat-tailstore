@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: jdbc:tc:mysql:5.6://hostname/db
+    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+    initialization-mode: always
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+
+  kafka:
+    consumer:
+      auto-offset-reset: earliest
+      group-id: events
