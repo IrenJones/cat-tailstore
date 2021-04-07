@@ -2,7 +2,6 @@ package com.cattailstore.store.configuration;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Bean;
 import org.testcontainers.containers.MongoDBContainer;
 import org.testcontainers.utility.DockerImageName;
 
@@ -10,11 +9,24 @@ import org.testcontainers.utility.DockerImageName;
 @TestConfiguration
 public class MongoContainer {
 
-    @Bean
-    public MongoDBContainer mongoContainer() {
-        final MongoDBContainer mongoDBContainer = new MongoDBContainer(DockerImageName.parse("mongo:4.0.10"));
-        mongoDBContainer.start();
-        log.info("\uD83D\uDC33 MongoDb is running ..." + mongoDBContainer.getContainerName());
-        return mongoDBContainer;
+    private static MongoDBContainer containerInst;
+
+    public static MongoDBContainer getInstance() {
+        if (containerInst == null) {
+            containerInst = mongoContainer();
+        }
+        return containerInst;
     }
+
+    private static MongoDBContainer mongoContainer() {
+        MongoDBContainer container = new MongoDBContainer(DockerImageName.parse("mongo:4.0.10"));
+        container.start();
+        log.warn("------> MongoDb is running ..." + container.getContainerName());
+        return container;
+    }
+
+//    @DynamicPropertySource
+//    static void mongoDbProperties(DynamicPropertyRegistry registry, MongoDBContainer mongoDBContainer) {
+//        registry.add("spring.data.mongodb.uri", mongoDBContainer::getReplicaSetUrl);
+//    }
 }

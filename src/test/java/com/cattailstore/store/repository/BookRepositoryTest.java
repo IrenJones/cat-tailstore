@@ -1,5 +1,6 @@
 package com.cattailstore.store.repository;
 
+import com.cattailstore.store.configuration.MysqlContainer;
 import com.cattailstore.store.repository.mysql.BookRepository;
 
 import org.junit.Assert;
@@ -12,8 +13,8 @@ import org.testcontainers.containers.MySQLContainer;
 @SpringBootTest
 public class BookRepositoryTest {
 
-    @Autowired
-    public MySQLContainer<?> mysql;
+    @ClassRule
+    public static MySQLContainer<?> mySQLContainer = MysqlContainer.getInstance();
 
     @Autowired
     public BookRepository repository;
@@ -21,6 +22,5 @@ public class BookRepositoryTest {
     @Test
     public void testConnection() {
         Assert.assertEquals(0, repository.count());
-        Assert.assertNotNull(mysql.getDatabaseName());
     }
 }

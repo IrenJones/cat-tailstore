@@ -2,7 +2,6 @@ package com.cattailstore.store.configuration;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Bean;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.utility.DockerImageName;
 
@@ -10,11 +9,19 @@ import org.testcontainers.utility.DockerImageName;
 @TestConfiguration
 public class MysqlContainer {
 
-    @Bean
-    public MySQLContainer<?> mySQlContainer(){
+    private static MySQLContainer<?> containerInst;
+
+    public static MySQLContainer<?> getInstance() {
+        if (containerInst == null) {
+            containerInst = mySQlContainer();
+        }
+        return containerInst;
+    }
+
+    private static MySQLContainer<?> mySQlContainer(){
         MySQLContainer<?> mysql = new MySQLContainer<>(DockerImageName.parse("mysql:5.6"));
         mysql.start();
-        log.info("\uD83D\uDC33 MySQL Db is running ..." + mysql.getContainerName());
+        log.warn("------> MySQL Db is running ..." + mysql.getContainerName());
         return mysql;
     }
 }

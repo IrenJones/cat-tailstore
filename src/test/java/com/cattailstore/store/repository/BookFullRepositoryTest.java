@@ -1,23 +1,27 @@
 package com.cattailstore.store.repository;
 
+import javax.transaction.Transactional;
 import com.cattailstore.store.configuration.MongoContainer;
 import com.cattailstore.store.model.mongodb.BookFull;
 import com.cattailstore.store.repository.mongodb.BookFullRepository;
 import org.junit.Assert;
+import org.junit.ClassRule;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.testcontainers.containers.MongoDBContainer;
 
 @SpringBootTest
 public class BookFullRepositoryTest {
 
-    @Autowired
-    public MongoContainer container;
+    @ClassRule
+    public static MongoDBContainer mongoDBContainer = MongoContainer.getInstance();
 
     @Autowired
     public BookFullRepository repository;
 
     @Test
+    @Transactional
     public void testConnectionOne(){
         BookFull book = new BookFull("1", 1L, "Sherlock", "Holmes is here");
         repository.save(book);
@@ -25,6 +29,7 @@ public class BookFullRepositoryTest {
     }
 
     @Test
+    @Transactional
     public void testConnectionTwo(){
         BookFull book = new BookFull("1", 1L, "Sherlock", "Holmes is here");
         repository.save(book);
