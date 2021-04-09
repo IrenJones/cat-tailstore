@@ -24,9 +24,4 @@ public class MongoContainer {
         log.warn("------> MongoDb is running ..." + container.getContainerName());
         return container;
     }
-
-//    @DynamicPropertySource
-//    static void mongoDbProperties(DynamicPropertyRegistry registry, MongoDBContainer mongoDBContainer) {
-//        registry.add("spring.data.mongodb.uri", mongoDBContainer::getReplicaSetUrl);
-//    }
 }

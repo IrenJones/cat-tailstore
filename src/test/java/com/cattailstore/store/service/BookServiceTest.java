@@ -1,31 +1,20 @@
 package com.cattailstore.store.service;
 
 import javax.transaction.Transactional;
-import com.cattailstore.store.configuration.MongoContainer;
-import com.cattailstore.store.configuration.MyKafkaContainer;
-import com.cattailstore.store.configuration.MysqlContainer;
+import com.cattailstore.store.configuration.BasicTest;
 import com.cattailstore.store.model.mysql.Book;
 import com.cattailstore.store.repository.mysql.BookRepository;
-import org.junit.Assert;
-import org.junit.ClassRule;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.testcontainers.containers.KafkaContainer;
-import org.testcontainers.containers.MongoDBContainer;
-import org.testcontainers.containers.MySQLContainer;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
+
+@Slf4j
 @SpringBootTest
-public class BookServiceTest {
-
-    @ClassRule
-    public static MySQLContainer<?> msqContainer = MysqlContainer.getInstance();
-
-    @ClassRule
-    public static MongoDBContainer mongoContainer = MongoContainer.getInstance();
-
-    @ClassRule
-    public static KafkaContainer kafkaContainer = MyKafkaContainer.getInstance();
+public class BookServiceTest extends BasicTest {
 
     @Autowired
     public BookService service;
@@ -35,7 +24,7 @@ public class BookServiceTest {
 
     @Test
     @Transactional
-    public void test(){
+    public void whenFindBookByIdReturnBook(){
 
         // given
         Book book = new Book();
@@ -45,6 +34,9 @@ public class BookServiceTest {
         // when
         Book result = service.findBookById(book.getId());
 
-        Assert.assertEquals(result.getTitle(), book.getTitle());
+        // then
+        assertThat(result,
+            hasProperty("title", equalTo("New book"))
+        );
     }
 }

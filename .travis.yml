@@ -1,10 +1,10 @@
-#language: java
-#jdk:
-#  - openjdk11
-#
-#sudo: required
-#services:
-#  - docker
-#
-#after_success:
-#  - bash <(curl -s https://codecov.io/bash)
+language: java
+jdk:
+  - openjdk11
+
+sudo: required
+services:
+  - docker
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)

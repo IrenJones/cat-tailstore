@@ -1,26 +1,28 @@
 package com.cattailstore.store.repository;
 
-import com.cattailstore.store.configuration.MysqlContainer;
+import java.util.List;
+import com.cattailstore.store.configuration.BasicTest;
+import com.cattailstore.store.model.mysql.Book;
 import com.cattailstore.store.repository.mysql.BookRepository;
 
-import org.junit.Assert;
-import org.junit.ClassRule;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.testcontainers.containers.MySQLContainer;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasSize;
+
+@Slf4j
 @SpringBootTest
-public class BookRepositoryTest {
-
-    @ClassRule
-    public static MySQLContainer<?> mySQLContainer = MysqlContainer.getInstance();
+public class BookRepositoryTest extends BasicTest {
 
     @Autowired
     public BookRepository repository;
 
     @Test
     public void testConnection() {
-        Assert.assertEquals(0, repository.count());
+        List<Book> result = repository.findAll();
+        assertThat(result, hasSize(0));
     }
 }

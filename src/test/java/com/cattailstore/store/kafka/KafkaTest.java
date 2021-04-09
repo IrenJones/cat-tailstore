@@ -3,25 +3,22 @@ package com.cattailstore.store.kafka;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import com.cattailstore.store.configuration.MyKafkaContainer;
+import com.cattailstore.store.configuration.BasicTest;
 import com.cattailstore.store.shared.Topics;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.TopicPartition;
 import org.junit.Assert;
-import org.junit.ClassRule;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.testcontainers.containers.KafkaContainer;
 
+@Slf4j
 @SpringBootTest
-public class KafkaTest {
-
-    @ClassRule
-    public static KafkaContainer kafkaContainer = MyKafkaContainer.getInstance();
+public class KafkaTest extends BasicTest{
 
     @Autowired
     public KafkaProperties kafkaProperties;

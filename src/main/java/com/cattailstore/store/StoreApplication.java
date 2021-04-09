@@ -24,7 +24,7 @@ public class StoreApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) {
-		repository.save(new BookFull("1", null, "Toto", "ogogo"));
+		repository.save(new BookFull("1", null, "Toto", "ogogo", "Da"));
 
 		//BookFull book = repository.findByBookId(2L);
 		//System.out.println(book.getTitle());

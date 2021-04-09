@@ -1,6 +1,5 @@
 package com.cattailstore.store.configuration;
 
-import java.time.Duration;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.testcontainers.containers.KafkaContainer;

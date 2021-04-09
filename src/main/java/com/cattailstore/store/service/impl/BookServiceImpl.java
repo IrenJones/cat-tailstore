@@ -78,7 +78,7 @@ public class BookServiceImpl implements BookService {
 	public void synchronize() {
 		List<BookFull> books = bookFullRepository.findAll();
 		for(BookFull book: books) {
-			if(book.bookId == null) {
+			if(book.getBookId() == null) {
 				Book newBook = new Book();
 				newBook.setTitle(book.getTitle());
 				newBook = repository.save(newBook);

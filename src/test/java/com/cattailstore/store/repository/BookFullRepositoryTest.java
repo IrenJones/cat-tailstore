@@ -1,21 +1,18 @@
 package com.cattailstore.store.repository;
 
 import javax.transaction.Transactional;
-import com.cattailstore.store.configuration.MongoContainer;
+import com.cattailstore.store.configuration.BasicTest;
 import com.cattailstore.store.model.mongodb.BookFull;
 import com.cattailstore.store.repository.mongodb.BookFullRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
-import org.junit.ClassRule;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.testcontainers.containers.MongoDBContainer;
 
+@Slf4j
 @SpringBootTest
-public class BookFullRepositoryTest {
-
-    @ClassRule
-    public static MongoDBContainer mongoDBContainer = MongoContainer.getInstance();
+public class BookFullRepositoryTest extends BasicTest {
 
     @Autowired
     public BookFullRepository repository;
@@ -23,7 +20,7 @@ public class BookFullRepositoryTest {
     @Test
     @Transactional
     public void testConnectionOne(){
-        BookFull book = new BookFull("1", 1L, "Sherlock", "Holmes is here");
+        BookFull book = new BookFull("1", 1L, "Sherlock", "Holmes is here", "Dadad");
         repository.save(book);
         Assert.assertEquals("Sherlock", repository.findByBookId(1L).getTitle());
     }
@@ -31,9 +28,9 @@ public class BookFullRepositoryTest {
     @Test
     @Transactional
     public void testConnectionTwo(){
-        BookFull book = new BookFull("1", 1L, "Sherlock", "Holmes is here");
+        BookFull book = new BookFull("1", 1L, "Sherlock", "Holmes is here", "Da");
         repository.save(book);
-        book = new BookFull("2", 2L, "Sherlock", "Holmes is here");
+        book = new BookFull("2", 2L, "Sherlock", "Holmes is here", "Da");
         repository.save(book);
         Assert.assertEquals(2, repository.count());
     }

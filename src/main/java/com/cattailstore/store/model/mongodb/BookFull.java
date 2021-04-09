@@ -12,11 +12,13 @@ import javax.persistence.Table;
 public class BookFull {
 
 	@Id
-	public String id;
+	String id;
 
-	public Long bookId;
+	Long bookId;
 
-	public String title;
+	String title;
 
-	public String description;
+	String author;
+
+	String description;
 }
