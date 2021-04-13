@@ -1,12 +1,14 @@
 package com.cattailstore.store.controller;
 
 import com.cattailstore.store.dto.FullBookDto;
+import com.cattailstore.store.dto.UpdateInfo;
 import com.cattailstore.store.model.mongodb.BookFull;
 import com.cattailstore.store.model.mysql.Book;
 import com.cattailstore.store.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,7 +44,9 @@ public class BookController {
 
 	@PutMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<FullBookDto> updateBook(@PathVariable("id") final long bookId, @RequestBody final FullBookDto book) {
+	public ResponseEntity<FullBookDto> updateBook(@PathVariable("id") final long bookId,
+		@Validated(UpdateInfo.class) @RequestBody final FullBookDto book) {
+
 		return new ResponseEntity<>(bookService.update(bookId, book), HttpStatus.CREATED);
 	}
 

@@ -15,5 +15,7 @@ public interface BookService {
 
 	FullBookDto update(long id, FullBookDto book);
 
+	void uploadData();
+
 	void synchronize();
 }

@@ -10,5 +10,7 @@ public interface BookRepository extends CrudRepository<Book, Long> {
 
     Book findById(long id);
 
+    boolean existsByIsbn(String isbn);
+
     List<Book> findAll();
 }

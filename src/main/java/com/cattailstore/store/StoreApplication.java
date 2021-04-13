@@ -1,7 +1,9 @@
 package com.cattailstore.store;
 
-import com.cattailstore.store.model.mongodb.BookFull;
+import java.io.IOException;
 import com.cattailstore.store.repository.mongodb.BookFullRepository;
+import com.cattailstore.store.service.BookService;
+import com.google.gdata.util.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -15,7 +17,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 public class StoreApplication implements CommandLineRunner {
 
 	@Autowired
-	public BookFullRepository repository;
+	public BookService service;
 
 	public static void main(String[] args) {
 		SpringApplication.run(StoreApplication.class, args);
@@ -24,9 +26,6 @@ public class StoreApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) {
-		repository.save(new BookFull("1", null, "Toto", "ogogo", "Da"));
-
-		//BookFull book = repository.findByBookId(2L);
-		//System.out.println(book.getTitle());
+		service.uploadData();
 	}
 }

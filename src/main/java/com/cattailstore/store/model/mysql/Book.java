@@ -20,5 +20,11 @@ public class Book {
 
 	String title;
 
+	String subtitle;
+
 	String author;
+
+	int year;
+
+	String isbn;
 }

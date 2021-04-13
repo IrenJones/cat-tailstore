@@ -20,7 +20,7 @@ public class BookFullRepositoryTest extends BasicTest {
     @Test
     @Transactional
     public void testConnectionOne(){
-        BookFull book = new BookFull("1", 1L, "Sherlock", "Holmes is here", "Dadad");
+        BookFull book = new BookFull("1", 1L, "Sherlock", "Holmes is here", "Dadad", 2, "", "");
         repository.save(book);
         Assert.assertEquals("Sherlock", repository.findByBookId(1L).getTitle());
     }
@@ -28,9 +28,9 @@ public class BookFullRepositoryTest extends BasicTest {
     @Test
     @Transactional
     public void testConnectionTwo(){
-        BookFull book = new BookFull("1", 1L, "Sherlock", "Holmes is here", "Da");
+        BookFull book = new BookFull("1", 1L, "Sherlock", "Holmes is here", "Da", 2, "", "");
         repository.save(book);
-        book = new BookFull("2", 2L, "Sherlock", "Holmes is here", "Da");
+        book = new BookFull("2", 2L, "Sherlock", "Holmes is here", "Da", 2, "", "");
         repository.save(book);
         Assert.assertEquals(2, repository.count());
     }
