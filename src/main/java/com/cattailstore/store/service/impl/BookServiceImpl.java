@@ -1,6 +1,5 @@
 package com.cattailstore.store.service.impl;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,8 +15,6 @@ import com.cattailstore.store.service.BookService;
 import com.cattailstore.store.service.ItBookstoreService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.json.JsonParser;
-import org.springframework.boot.json.JsonParserFactory;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Service;
 
@@ -83,19 +80,18 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void uploadData(){
-        String json = itBookstoreService.getJsonResultByTopic("mongo");
-        JsonParser parser = JsonParserFactory.getJsonParser();
-        List<Map<String, String>> books = (List<Map<String, String>>) parser.parseMap(json).get("books");
+    public void uploadData() {
+        List<Map<String, String>> books = itBookstoreService.getBookInfoByTopic("mongo");
+
         Map<String, BookFull> bookFullList = new HashMap<>();
-        for(Map<String, String> b: books) {
+        for (Map<String, String> b : books) {
             String isbn = b.get("isbn13");
-            if(!repository.existsByIsbn(isbn)) {
-                bookFullList.put(isbn, getInfo(isbn));
+            if (!repository.existsByIsbn(isbn)) {
+                bookFullList.put(isbn, itBookstoreService.getInfo(isbn));
             }
         }
 
-        if(bookFullList.size() > 0) {
+        if (bookFullList.size() > 0) {
 
             List<Book> shortBooks = bookFullList.values().stream()
                 .map(b -> mapper.convertValue(b, Book.class))
@@ -108,22 +104,6 @@ public class BookServiceImpl implements BookService {
                 bookFullRepository.save(bookFull);
             }
         }
-    }
-
-    private BookFull getInfo(String isbn) {
-        String json = itBookstoreService.getJsonInfoByIsbn(isbn);
-        JsonParser parser = JsonParserFactory.getJsonParser();
-        Map<String, Object> info = parser.parseMap(json);
-
-        BookFull bookFull = new BookFull();
-        bookFull.setTitle((String) info.get("title"));
-        bookFull.setSubtitle((String) info.get("subtitle"));
-        bookFull.setYear(Integer.parseInt((String) info.get("year")));
-        bookFull.setAuthor((String) info.get("authors"));
-        bookFull.setDescription((String) info.get("desc"));
-        bookFull.setIsbn(isbn);
-
-        return bookFull;
     }
 
     @Transactional(Transactional.TxType.REQUIRED)

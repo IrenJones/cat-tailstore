@@ -1,9 +1,6 @@
 package com.cattailstore.store;
 
-import java.io.IOException;
-import com.cattailstore.store.repository.mongodb.BookFullRepository;
 import com.cattailstore.store.service.BookService;
-import com.google.gdata.util.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
