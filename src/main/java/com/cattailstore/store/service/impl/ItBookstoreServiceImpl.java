@@ -25,11 +25,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class ItBookstoreServiceImpl implements ItBookstoreService {
 
+    private final static String SITE_URL = "https://api.itbook.store/1.0/";
+
     @Override
     public String getJsonInfoByIsbn(String isbn) {
         StringBuilder json = new StringBuilder();
         try {
-            json = doRequest(new URL("https://api.itbook.store/1.0/books/" + isbn));
+            json = doRequest(new URL(SITE_URL+ "books/" + isbn));
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -62,7 +64,7 @@ public class ItBookstoreServiceImpl implements ItBookstoreService {
     public String getJsonResultByTopic(String topic, int page) {
         StringBuilder json = new StringBuilder();
         try {
-            json = doRequest(new URL("https://api.itbook.store/1.0/search/" + topic + "/" + page));
+            json = doRequest(new URL(SITE_URL + "search/" + topic + "/" + page));
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

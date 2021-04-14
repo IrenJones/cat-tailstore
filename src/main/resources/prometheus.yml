@@ -1,0 +1,9 @@
+global:
+  scrape_interval: 10s # Scrape interval to every 10 seconds. Default value is every 1 minute
+
+scrape_configs:
+  - job_name: 'spring_micrometer'
+
+    metrics_path: '/store/actuator/prometheus' # Path to the prometheus end point in our application
+    static_configs:
+      - targets: [''] # host where our application is deployed
