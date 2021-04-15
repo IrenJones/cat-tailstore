@@ -2,9 +2,11 @@ package com.cattailstore.store.controller;
 
 import com.cattailstore.store.dto.FullBookDto;
 import com.cattailstore.store.dto.UpdateInfo;
+import com.cattailstore.store.error.BookDoesntExistException;
 import com.cattailstore.store.model.mongodb.BookFull;
 import com.cattailstore.store.model.mysql.Book;
 import com.cattailstore.store.service.BookService;
+import io.micrometer.core.annotation.Timed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,18 +24,19 @@ import java.util.Collection;
 
 @RestController
 @RequestMapping("/books")
+@Timed("BOOKS")
 public class BookController {
 
 	@Autowired
 	public BookService bookService;
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Book> findById(@PathVariable long id) {
+	public ResponseEntity<Book> findById(@PathVariable long id) throws BookDoesntExistException {
 		return new ResponseEntity<>(bookService.findBookById(id), HttpStatus.OK);
 	}
 
 	@GetMapping("/{id}/description")
-	public ResponseEntity<BookFull> findByIdFullInfo(@PathVariable long id) {
+	public ResponseEntity<BookFull> findByIdFullInfo(@PathVariable long id) throws BookDoesntExistException {
 		return new ResponseEntity<>(bookService.getBookWithDescriptionById(id), HttpStatus.OK);
 	}
 
@@ -45,8 +48,7 @@ public class BookController {
 	@PutMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<FullBookDto> updateBook(@PathVariable("id") final long bookId,
-		@Validated(UpdateInfo.class) @RequestBody final FullBookDto book) {
-
+		@Validated(UpdateInfo.class) @RequestBody final FullBookDto book) throws BookDoesntExistException {
 		return new ResponseEntity<>(bookService.update(bookId, book), HttpStatus.CREATED);
 	}
 

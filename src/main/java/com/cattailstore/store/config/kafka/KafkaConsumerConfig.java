@@ -1,4 +1,4 @@
-package com.cattailstore.store.config;
+package com.cattailstore.store.config.kafka;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;

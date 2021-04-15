@@ -1,4 +1,4 @@
-package com.cattailstore.store.config;
+package com.cattailstore.store.config.kafka;
 
 import com.cattailstore.store.shared.Topics;
 import org.apache.kafka.clients.admin.AdminClientConfig;

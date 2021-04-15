@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import javax.persistence.LockModeType;
 import javax.transaction.Transactional;
 import com.cattailstore.store.dto.FullBookDto;
+import com.cattailstore.store.error.BookDoesntExistException;
 import com.cattailstore.store.model.mongodb.BookFull;
 import com.cattailstore.store.model.mysql.Book;
 import com.cattailstore.store.repository.mongodb.BookFullRepository;
@@ -34,20 +35,19 @@ public class BookServiceImpl implements BookService {
     public ObjectMapper mapper;
 
     @Override
-    public Book findBookById(long id) {
-        //todo add handling exception
+    public Book findBookById(long id) throws BookDoesntExistException {
         if (repository.existsById(id)) {
             return repository.findById(id);
         }
-        return null;
+        throw new BookDoesntExistException(id);
     }
 
     @Override
-    public BookFull getBookWithDescriptionById(long bookId) {
-        //todo add handling exception
-        return repository.existsById(bookId)
-            ? bookFullRepository.findByBookId(bookId)
-            : null;
+    public BookFull getBookWithDescriptionById(long bookId) throws BookDoesntExistException {
+        if(repository.existsById(bookId)){
+            return bookFullRepository.findByBookId(bookId);
+        }
+        throw new BookDoesntExistException(bookId);
     }
 
     @Override
@@ -56,7 +56,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public FullBookDto update(long bookId, FullBookDto updatedBook) {
+    public FullBookDto update(long bookId, FullBookDto updatedBook) throws BookDoesntExistException {
         if (repository.existsById(bookId)) {
             BookFull full = bookFullRepository.findByBookId(bookId);
             Book book = repository.findById(bookId);
@@ -76,7 +76,7 @@ public class BookServiceImpl implements BookService {
             return mapper.convertValue(bookFullRepository.findByBookId(bookId), FullBookDto.class);
         }
 
-        return null;
+        throw new BookDoesntExistException(bookId);
     }
 
     @Override
