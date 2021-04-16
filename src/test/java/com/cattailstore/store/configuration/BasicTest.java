@@ -1,22 +1,16 @@
 package com.cattailstore.store.configuration;
 
-import org.junit.ClassRule;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.testcontainers.containers.KafkaContainer;
 import org.testcontainers.containers.MongoDBContainer;
 import org.testcontainers.containers.MySQLContainer;
 
 @ContextConfiguration(initializers = Initializer.class)
-@SpringBootTest
-public class BasicTest {
+public abstract class BasicTest {
 
-    @ClassRule
-    public static MySQLContainer<?> mySQLContainer = MysqlContainer.getInstance();
+    public static final MySQLContainer<?> mySQLContainer = MysqlContainer.getInstance();
 
-    @ClassRule
-    public static MongoDBContainer mongoDBContainer = MongoContainer.getInstance();
+    public static final MongoDBContainer mongoDBContainer = MongoContainer.getInstance();
 
-    @ClassRule
-    public static KafkaContainer kafkaContainer = MyKafkaContainer.getInstance();
+    public static final KafkaContainer kafkaContainer = MyKafkaContainer.getInstance();
 }

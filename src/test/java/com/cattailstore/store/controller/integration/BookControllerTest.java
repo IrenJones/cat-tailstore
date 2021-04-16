@@ -1,5 +1,6 @@
 package com.cattailstore.store.controller.integration;
 
+import com.cattailstore.store.configuration.BasicTest;
 import com.cattailstore.store.controller.BookController;
 import com.cattailstore.store.dto.FullBookDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,9 +15,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class BookControllerTest {
+public class BookControllerTest extends BasicTest {
 
     @Autowired
     private BookController bookController;
