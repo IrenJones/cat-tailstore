@@ -1,6 +1,5 @@
 package com.cattailstore.store.service;
 
-import javax.transaction.Transactional;
 import com.cattailstore.store.configuration.BasicTest;
 import com.cattailstore.store.model.mysql.Book;
 import com.cattailstore.store.repository.mysql.BookRepository;
